@@ -7,6 +7,7 @@ import cc.synkdev.deathLogger.listener.DeathListener;
 import cc.synkdev.deathLogger.manager.Death;
 import cc.synkdev.deathLogger.manager.FileManager;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 public final class DeathLogger extends JavaPlugin {
     @Getter private static DeathLogger instance;
-    @Getter private String prefix = ChatColor.translateAlternateColorCodes('&', "&8[&6DeathLogger&8] » &r");
+    @Getter private final String prefix = ChatColor.translateAlternateColorCodes('&', "&8[&6DeathLogger&8] » &r");
     @Getter private FileManager fm;
     public List<Death> deaths = new ArrayList<>();
     private String noRecentDeath;
@@ -74,6 +75,8 @@ public final class DeathLogger extends JavaPlugin {
         this.getCommand("lastdeaths").setExecutor(new Last());
         this.getCommand("dlreload").setExecutor(new Reload());
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+        int plId = 22687;
+        Metrics metrics = new Metrics(this, plId);
     }
 
 
