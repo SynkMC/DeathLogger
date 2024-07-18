@@ -1,0 +1,19 @@
+error: An error has occurred. Please check the console for errors
+noRecentDeath: The player has no recent death
+missingName: Please specify a player's name
+server: Server
+location: Location
+queryError: Error while retrieving data
+noPermission: You don't have the permission to use this command
+playerOnly: You must be a player to use this command
+usage: "Usage:"
+wrongFormat: Wrong number format
+invFromDeath: Inventory from death
+wasOpened: was opened
+doesntExist: doesn't exist
+notFound: No death found with id
+reloaded: The configuration file was successfully reloaded
+deathMsg: Death message
+latestDeathsOf: Latest deaths of
+clickToTeleport: Click to teleport to the death location
+teleport: Teleport

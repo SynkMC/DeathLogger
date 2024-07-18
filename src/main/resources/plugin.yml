@@ -1,0 +1,13 @@
+name: DeathLogger
+version: '2.0'
+main: cc.synkdev.deathLogger.DeathLogger
+api-version: '1.19'
+authors: [ Synk ]
+commands:
+  getdeath:
+    usage: "/getdeath"
+  lastdeaths:
+    usage: "/lastdeaths"
+  dlreload:
+    usage: "/dlreload"
+
