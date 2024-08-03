@@ -21,3 +21,4 @@ Permissions:
 - deathlog.last - allows you tu use the lastdeaths command
 - deathlog.get - allows you to use the getdeath command
 - deathlog.get.take - allows you to take items in the getdeath gui
+
