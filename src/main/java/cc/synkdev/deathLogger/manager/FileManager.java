@@ -62,7 +62,7 @@ public class FileManager {
     }
     private Location stringToPos(String s) {
         String[] ss = s.split(",");
-        return new Location(Bukkit.getWorld(ss[0]), Double.parseDouble(ss[1]), Double.parseDouble(ss[1]), Double.parseDouble(ss[1]));
+        return new Location(Bukkit.getWorld(ss[0]), Double.parseDouble(ss[1]), Double.parseDouble(ss[2]), Double.parseDouble(ss[3]));
     }
 
     private String serializeInventory(ItemStack[] inventory) {
