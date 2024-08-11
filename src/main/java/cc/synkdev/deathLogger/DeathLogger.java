@@ -27,7 +27,7 @@ public final class DeathLogger extends JavaPlugin {
     public List<Death> deaths = new ArrayList<>();
     Lang lm;
 
-    private final String version = "2.2";
+    private final String version = "2.3";
     @Setter private String newVersion = null;
     @Getter @Setter Boolean update = false;
 
@@ -40,7 +40,6 @@ public final class DeathLogger extends JavaPlugin {
         lm = new Lang();
         lm.init();
         lm.load();
-        purgeConfig();
         fm = new FileManager();
         fm.create();
         fm.setDeathMap();
@@ -60,9 +59,5 @@ public final class DeathLogger extends JavaPlugin {
     }
     public void log(String s) {
         Bukkit.getConsoleSender().sendMessage(s);
-    }
-    private void purgeConfig() {
-        File file = new File(this.getDataFolder(), "config.yml");
-        if (file.exists()) file.delete();
     }
 }

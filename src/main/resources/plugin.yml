@@ -1,5 +1,5 @@
 name: DeathLogger
-version: '2.2'
+version: '2.3'
 main: cc.synkdev.deathLogger.DeathLogger
 api-version: '1.19'
 authors: [ Synk ]

@@ -17,6 +17,9 @@ public class Lang {
     public File file = new File(core.getDataFolder(), "lang.yml");
 
     public void init() {
+        if (!core.getDataFolder().exists()) {
+            core.getDataFolder().mkdirs();
+        }
         if (!file.exists()) {
             try {
                 file.createNewFile();
