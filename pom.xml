@@ -6,7 +6,7 @@
 
     <groupId>cc.synkdev</groupId>
     <artifactId>DeathLogger</artifactId>
-    <version>2.3</version>
+    <version>2.4</version>
     <packaging>jar</packaging>
 
     <name>DeathLogger</name>
@@ -90,8 +90,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.13-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cc.synkdev</groupId>
+            <artifactId>SynkLibs</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 </project>
