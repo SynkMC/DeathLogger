@@ -7,6 +7,7 @@ import cc.synkdev.deathLogger.listener.DeathListener;
 import cc.synkdev.deathLogger.manager.Death;
 import cc.synkdev.deathLogger.manager.FileManager;
 import cc.synkdev.deathLogger.manager.Lang;
+import cc.synkdev.synkLibs.SynkLibs;
 import cc.synkdev.synkLibs.Utils;
 import cc.synkdev.synkLibs.components.SynkPlugin;
 import lombok.Getter;
@@ -25,11 +26,13 @@ public final class DeathLogger extends JavaPlugin implements SynkPlugin {
     @Getter private FileManager fm;
     public List<Death> deaths = new ArrayList<>();
     Lang lm;
+    cc.synkdev.synkLibs.Lang sll;
 
 
     public void onEnable() {
         instance = this;
-        new Utils(this).checkUpdate();
+        SynkLibs.setSpl(this);
+        Utils.checkUpdate(this, this);
         lm = new Lang();
         lm.init();
         lm.load();
