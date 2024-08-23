@@ -63,7 +63,7 @@ public final class DeathLogger extends JavaPlugin implements SynkPlugin {
 
     @Override
     public String ver() {
-        return "2.4";
+        return "2.5";
     }
 
     @Override
