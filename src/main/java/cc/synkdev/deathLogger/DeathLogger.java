@@ -17,7 +17,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public final class DeathLogger extends JavaPlugin implements SynkPlugin {
@@ -25,13 +27,12 @@ public final class DeathLogger extends JavaPlugin implements SynkPlugin {
     @Getter private final String prefix = ChatColor.translateAlternateColorCodes('&', "&8[&6DeathLogger&8] » &r");
     @Getter private FileManager fm;
     public List<Death> deaths = new ArrayList<>();
+    public Map<String, String> langMap = new HashMap<>();
     Lang lm;
 
 
     public void onEnable() {
         instance = this;
-        SynkLibs.setSpl(this);
-        Utils.checkUpdate(this, this);
         lm = new Lang();
         lm.init();
         lm.load();
@@ -62,7 +63,7 @@ public final class DeathLogger extends JavaPlugin implements SynkPlugin {
 
     @Override
     public String ver() {
-        return "2.5";
+        return "2.6";
     }
 
     @Override
@@ -73,5 +74,15 @@ public final class DeathLogger extends JavaPlugin implements SynkPlugin {
     @Override
     public String prefix() {
         return prefix;
+    }
+
+    @Override
+    public String lang() {
+        return "https://synkdev.cc/storage/translations/lang-pld/DeathLogger/lang-dl.json";
+    }
+
+    @Override
+    public Map<String, String> langMap() {
+        return langMap;
     }
 }
