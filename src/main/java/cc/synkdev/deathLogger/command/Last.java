@@ -2,7 +2,7 @@ package cc.synkdev.deathLogger.command;
 
 import cc.synkdev.deathLogger.DeathLogger;
 import cc.synkdev.deathLogger.manager.Death;
-import cc.synkdev.deathLogger.manager.Lang;
+import cc.synkdev.synkLibs.bukkit.Lang;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -24,20 +24,19 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Last implements CommandExecutor {
-    Lang lang = new Lang();
     private final DeathLogger core = DeathLogger.getInstance();
 
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player p = (Player) sender;
         if (p.hasPermission("deathlogger.last")) {
             if (args.length != 1) {
-                p.sendMessage(ChatColor.RED + lang.translate("missingName"));
+                p.sendMessage(ChatColor.RED + Lang.translate("missingName", core));
             } else {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 if (getPlayerDeathsDesc(target).isEmpty()) {
-                    p.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("noRecentDeath"));
+                    p.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("noRecentDeath", core));
                 } else {
-                    p.sendMessage(core.getPrefix() + ChatColor.GOLD + lang.translate("latestDeathsOf") + " " + p.getName());
+                    p.sendMessage(core.getPrefix() + ChatColor.GOLD + Lang.translate("latestDeathsOf", core) + " " + p.getName());
                     for (int i = 0; i < 10; i++) {
                         if (getPlayerDeathsDesc(target).size() > i) {
                             Death d = getPlayerDeathsDesc(target).get(i);
@@ -47,22 +46,22 @@ public class Last implements CommandExecutor {
                             int z = Math.toIntExact(Math.round(loc.getZ()));
                             Calendar cal = Calendar.getInstance();
                             cal.setTimeInMillis(d.getUnix());
-                            TextComponent hover = new TextComponent(lang.translate("clickToOpen"));
+                            TextComponent hover = new TextComponent(Lang.translate("clickToOpen", core));
                             hover.setColor(net.md_5.bungee.api.ChatColor.GOLD);
                             BaseComponent[] hovrs = {
                                     hover
                             };
-                            TextComponent hover1 = new TextComponent(lang.translate("giveInv"));
+                            TextComponent hover1 = new TextComponent(Lang.translate("giveInv", core));
                             hover1.setColor(net.md_5.bungee.api.ChatColor.GOLD);
                             BaseComponent[] hovrs1 = {
                                     hover1
                             };
-                            TextComponent open = new TextComponent("["+lang.translate("open")+"]");
+                            TextComponent open = new TextComponent("["+Lang.translate("open", core)+"]");
                             open.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hovrs));
                             open.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/getdeath "+d.getId()));
                             open.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
                             open.setBold(true);
-                            TextComponent give = new TextComponent(" | ["+lang.translate("give")+"]");
+                            TextComponent give = new TextComponent(" | ["+Lang.translate("give", core)+"]");
                             give.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hovrs1));
                             give.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dl giveinv "+d.getId()));
                             give.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
@@ -78,7 +77,7 @@ public class Last implements CommandExecutor {
                 }
             }
         } else {
-            p.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("noPermission"));
+            p.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("noPermission", core));
         }
 
         return true;

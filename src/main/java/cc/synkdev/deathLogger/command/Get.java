@@ -2,7 +2,7 @@ package cc.synkdev.deathLogger.command;
 
 import cc.synkdev.deathLogger.DeathLogger;
 import cc.synkdev.deathLogger.manager.Death;
-import cc.synkdev.deathLogger.manager.Lang;
+import cc.synkdev.synkLibs.bukkit.Lang;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -19,22 +19,20 @@ import org.bukkit.inventory.ItemStack;
 
 public class Get implements CommandExecutor {
     private final DeathLogger core = DeathLogger.getInstance();
-    Lang lang = new Lang();
     Last last = new Last();
 
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("playerOnly"));
-            return true;
+            sender.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("playerOnly", core));
         } else {
             Player player = (Player) sender;
             if (!player.hasPermission("deathlogger.get")) {
-                player.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("noPermission"));
+                player.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("noPermission", core));
                 return true;
             } else {
                 boolean canTakeItems = player.hasPermission("deathlogger.get.take");
                 if (args.length < 1) {
-                    player.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("getCmdUsage"));
+                    player.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("getCmdUsage", core));
                     return true;
                 } else {
                     OfflinePlayer op = Bukkit.getOfflinePlayer(args[0]);
@@ -43,7 +41,7 @@ public class Get implements CommandExecutor {
                                 .disableItemDrop()
                                 .disableItemPlace()
                                 .disableItemSwap()
-                                .title(Component.text(lang.translate("latestDeath") + " " + op.getName()))
+                                .title(Component.text(Lang.translate("latestDeath", core) + " " + op.getName()))
                                 .rows(6)
                                 .create();
                         if (!canTakeItems) {
@@ -63,14 +61,12 @@ public class Get implements CommandExecutor {
                                     }
                                 }
                                 GuiItem msgItem = ItemBuilder.from(Material.PAPER)
-                                        .name(Component.text(ChatColor.YELLOW + lang.translate("deathMsg")))
+                                        .name(Component.text(ChatColor.YELLOW + Lang.translate("deathMsg", core)))
                                         .lore(Component.text(ChatColor.GRAY + d.getMsg()))
-                                        .asGuiItem(inventoryClickEvent -> {
-                                            inventoryClickEvent.setCancelled(true);
-                                        });
+                                        .asGuiItem(inventoryClickEvent -> inventoryClickEvent.setCancelled(true));
                                 gui.addItem(msgItem);
                                 gui.open(player);
-                                player.sendMessage(core.getPrefix() + ChatColor.GREEN + lang.translate("invFromDeath") + " #" + d.getId() + " " + lang.translate("wasOpened"));
+                                player.sendMessage(core.getPrefix() + ChatColor.GREEN + Lang.translate("invFromDeath", core) + " #" + d.getId() + " " + Lang.translate("wasOpened", core));
                                 return true;
                             }
                         }
@@ -79,7 +75,7 @@ public class Get implements CommandExecutor {
                         try {
                             deathId = Integer.parseInt(args[0]);
                         } catch (NumberFormatException nfe) {
-                            player.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("wrongFormat"));
+                            player.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("wrongFormat", core));
                             return true;
                         }
                         if (core.deaths.size() >= deathId - 1) {
@@ -89,7 +85,7 @@ public class Get implements CommandExecutor {
                                     .disableItemDrop()
                                     .disableItemPlace()
                                     .disableItemSwap()
-                                    .title(Component.text(lang.translate("invFromDeath") + " #" + deathId))
+                                    .title(Component.text(Lang.translate("invFromDeath", core) + " #" + deathId))
                                     .rows(6)
                                     .create();
                             if (!canTakeItems) {
@@ -103,21 +99,19 @@ public class Get implements CommandExecutor {
                                     }
                                 }
                                 GuiItem msgItem = ItemBuilder.from(Material.PAPER)
-                                        .name(Component.text(ChatColor.YELLOW + lang.translate("deathMsg")))
+                                        .name(Component.text(ChatColor.YELLOW + Lang.translate("deathMsg", core)))
                                         .lore(Component.text(ChatColor.GRAY + deathMsg))
-                                        .asGuiItem(inventoryClickEvent -> {
-                                            inventoryClickEvent.setCancelled(true);
-                                        });
+                                        .asGuiItem(inventoryClickEvent -> inventoryClickEvent.setCancelled(true));
                                 ggui.addItem(msgItem);
                                 ggui.open(player);
-                                player.sendMessage(core.getPrefix() + ChatColor.GREEN + lang.translate("invFromDeath") + " #" + deathId + " " + lang.translate("wasOpened"));
+                                player.sendMessage(core.getPrefix() + ChatColor.GREEN + Lang.translate("invFromDeath", core) + " #" + deathId + " " + Lang.translate("wasOpened", core));
                             } else {
-                                player.sendMessage(core.getPrefix() + ChatColor.RED + lang.translate("invFromDeath") + " #" + deathId + " " + lang.translate("doesntExist"));
+                                player.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("invFromDeath", core) + " #" + deathId + " " + Lang.translate("doesntExist", core));
                             }
                         }
                 }
             }
-            return true;
         }
+        return true;
     }
 }

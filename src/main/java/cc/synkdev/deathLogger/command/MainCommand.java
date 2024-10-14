@@ -2,7 +2,7 @@ package cc.synkdev.deathLogger.command;
 
 import cc.synkdev.deathLogger.DeathLogger;
 import cc.synkdev.deathLogger.manager.Death;
-import cc.synkdev.deathLogger.manager.Lang;
+import cc.synkdev.synkLibs.bukkit.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,45 +11,41 @@ import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainCommand implements CommandExecutor, TabExecutor {
     private final DeathLogger core = DeathLogger.getInstance();
-    Lang lang = new Lang();
     private CommandSender sender;
 
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         this.sender = sender;
         switch (args.length) {
             case 1:
-                switch (args[0]) {
-                    case "reload":
-                        if (checkPerm("deathlogger.reload")) {
-                            core.getLm().load();
-                            core.getFm().setDeathMap();
-                            sender.sendMessage(ChatColor.GREEN + lang.translate("reloaded"));
-                        }
-                        break;
+                if (args[0].equalsIgnoreCase("reload")) {
+                    if (checkPerm("deathlogger.reload")) {
+                        core.langMap.clear();
+                        core.langMap.putAll(Lang.init(core, new File(core.getDataFolder(), "lang.json")));
+                        sender.sendMessage(ChatColor.GREEN + Lang.translate("reloaded", core));
+                    }
                 }
                 break;
             case 2:
-                switch (args[0]) {
-                    case "giveinv":
-                        if (checkPerm("deathlogger.giveinv")) {
-                            int id = Integer.parseInt(args[1]);
-                            if (core.deaths.size()>=id-1) {
-                                Death d = core.deaths.get(id);
-                                if (d.getPlayer().isOnline()) {
-                                    d.getPlayer().getPlayer().getInventory().setContents(d.getInv());
-                                    d.getPlayer().getPlayer().sendMessage(core.getPrefix()+ChatColor.GREEN+sender.getName()+" "+lang.translate("gaveInv"));
-                                    sender.sendMessage(core.getPrefix()+ChatColor.GREEN+lang.translate("success"));
-                                } else {
-                                    sender.sendMessage(core.getPrefix()+ChatColor.RED+lang.translate("offline"));
-                                }
+                if (args[0].equalsIgnoreCase("giveinv")) {
+                    if (checkPerm("deathlogger.giveinv")) {
+                        int id = Integer.parseInt(args[1]);
+                        if (core.deaths.size() >= id - 1) {
+                            Death d = core.deaths.get(id);
+                            if (d.getPlayer().isOnline()) {
+                                d.getPlayer().getPlayer().getInventory().setContents(d.getInv());
+                                d.getPlayer().getPlayer().sendMessage(core.getPrefix() + ChatColor.GREEN + sender.getName() + " " + Lang.translate("gaveInv", core));
+                                sender.sendMessage(core.getPrefix() + ChatColor.GREEN + Lang.translate("success", core));
+                            } else {
+                                sender.sendMessage(core.getPrefix() + ChatColor.RED + Lang.translate("offline", core));
                             }
                         }
-                        break;
+                    }
                 }
         }
 
@@ -71,7 +67,7 @@ public class MainCommand implements CommandExecutor, TabExecutor {
         if (sender.hasPermission(s)) {
             return true;
         } else {
-            sender.sendMessage(core.getPrefix()+ChatColor.RED+lang.translate("noPermission"));
+            sender.sendMessage(core.getPrefix()+ChatColor.RED+Lang.translate("noPermission", core));
             return false;
         }
     }
